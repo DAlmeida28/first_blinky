@@ -4,8 +4,21 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-cortex-m = { version = "0.7.7", features = ["inline-asm"] }
+cortex-m = "0.7.7"
 cortex-m-rt = "0.7.5"
 embedded-hal = "1.0.0"
 microbit-v2 = "0.15.1"
 nrf52833-hal = "0.18.0"
+panic-halt = "1.0.0"
+
+[[bin]]
+name = "my_blinky"
+path = "src/main.rs"
+test = false
+doctest = false
+bench = false
+
+[profile.release]
+codegen-units = 1
+debug = true
+lto = true
