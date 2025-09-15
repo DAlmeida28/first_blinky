@@ -2,6 +2,7 @@
 #![no_main]
 #![no_std]
 
+use cortex_m::asm::nop;
 use cortex_m_rt::entry;
 use microbit::{board::Board, display::blocking::Display, hal::Timer};
 use panic_rtt_target as _;
@@ -52,14 +53,51 @@ fn main() -> ! {
         [0, 0, 0, 0, 0],
     ];
 
-    let mut last_led = (0, 0);
+    let h_led = [
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 1],
+        [1, 0, 0, 0, 1],
+    ];
+
+    let e_led = [
+        [1, 1, 1, 1, 0],
+        [1, 0, 0, 0, 0],
+        [1, 1, 0, 1, 0],
+        [1, 0, 0, 0, 0],
+        [1, 1, 1, 1, 0],
+    ];
+
+    let l_led = [
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0],
+        [1, 1, 1, 1, 0],
+    ];
+
+    let o_led = [
+        [0, 0, 1, 0, 0],
+        [0, 1, 0, 1, 0],
+        [1, 0, 0, 0, 1],
+        [0, 1, 0, 1, 0],
+        [0, 0, 1, 0, 0],
+    ];
+
+    // let mut last_led = (0, 0);
 
     loop {
         for current_led in PIXELS.iter() {
-            leds[last_led.0][last_led.1] = 0;
-            leds[current_led.0][current_led.1] = 1;
-            display.show(&mut timer, leds, 100);
-            last_led = *current_led;
+            //            leds[last_led.0][last_led.1] = 0;
+            //            leds[current_led.0][current_led.1] = 1;
+            display.show(&mut timer, h_led, 300);
+            display.show(&mut timer, e_led, 200);
+            display.show(&mut timer, l_led, 200);
+            display.show(&mut timer, l_led, 200);
+            display.show(&mut timer, o_led, 200);
+            // last_led = *current_led;
         }
+        nop();
     }
 }
